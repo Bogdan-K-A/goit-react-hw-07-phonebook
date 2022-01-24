@@ -12,7 +12,6 @@ const ContactFilter = () => {
         className={s.filterInput}
         placeholder="Find contacts by name"
         type="text"
-        // value={value}
         onChange={(e) => onChange(e.target.value)}
       />
     </label>

@@ -1,13 +1,13 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import contactOperation from '../../redux/contacts/contact-operations'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import s from './ContactForm.module.css'
-import axios from 'axios'
+import { getContacts } from '../../redux/selector'
 
 function ContactForm() {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
-
+  const contacts = useSelector(getContacts)
   const dispatch = useDispatch()
 
   const handleChange = (e) => {
@@ -25,15 +25,24 @@ function ContactForm() {
     }
   }
 
+  useEffect(() => {
+    dispatch(contactOperation.fetchContacts())
+  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    axios
-      .get('https://61ec322ef3011500174d20fc.mockapi.io/contacts')
-      .then(({ data }) => console.log(data))
 
-    dispatch(contactOperation.addContact(name, number))
-    // setName('')
-    // setNumber('')
+    const reLockInput = contacts.find((contact) => contact.name === name)
+
+    if (reLockInput) {
+      alert('Такой контакт уже есть в списке')
+
+      return contacts
+    } else {
+      dispatch(contactOperation.addContact(name, number))
+      setName('')
+      setNumber('')
+    }
   }
 
   return (
