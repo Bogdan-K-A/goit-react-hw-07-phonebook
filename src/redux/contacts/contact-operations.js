@@ -7,15 +7,18 @@ import {
   fetchContactSuccess,
   fetchContactError,
 } from './contact-actions'
-// axios.defaults.baseURL = 'https://61ec322ef3011500174d20fc.mockapi.io'
-axios.defaults.baseURL = 'https:// http://localhost:4040'
+axios.defaults.baseURL = 'https://61ec322ef3011500174d20fc.mockapi.io'
+// axios.defaults.baseURL = 'https:// http://localhost:3030'
 
 const fetchContacts = () => (dispatch) => {
   dispatch(fetchContactRequest())
 
   return axios
     .get('/contacts')
-    .then(({ data }) => dispatch(fetchContactSuccess(data)))
+    .then(({ data }) => {
+      console.log(data)
+      return dispatch(fetchContactSuccess(data))
+    })
     .catch((error) => dispatch(fetchContactError(error)))
 }
 
@@ -24,7 +27,7 @@ const addContact = (name, number) => (dispatch) => {
     name,
     number,
   }
-  console.log(contact)
+  // console.log(contact)
   dispatch(addContactRequest())
 
   return axios

@@ -20,4 +20,4 @@ export const addContactError = createAction('contacts/addContactError')
 
 export const contactDelete = createAction('contactDelete')
 
-export const getContactFromLocaleStorage = createAction('getContacts')
+// export const getContactFromLocaleStorage = createAction('getContacts')

@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux'
 import contactOperation from '../../redux/contacts/contact-operations'
 import { useState } from 'react'
 import s from './ContactForm.module.css'
+import axios from 'axios'
 
 function ContactForm() {
   const [name, setName] = useState('')
@@ -26,10 +27,13 @@ function ContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    axios
+      .get('https://61ec322ef3011500174d20fc.mockapi.io/contacts')
+      .then(({ data }) => console.log(data))
 
     dispatch(contactOperation.addContact(name, number))
-    setName('')
-    setNumber('')
+    // setName('')
+    // setNumber('')
   }
 
   return (

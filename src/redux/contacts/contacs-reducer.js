@@ -3,7 +3,6 @@ import {
   addContactSuccess,
   fetchContactSuccess,
   contactDelete,
-  getContactFromLocaleStorage,
 } from './contact-actions'
 // import shortid from 'shortid'
 
@@ -16,7 +15,9 @@ import {
 
 const contactsReducer = createReducer([], {
   [fetchContactSuccess]: (_, { payload }) => payload,
+
   [addContactSuccess]: (state, { payload }) => {
+    // return [...state, payload]
     const reLockInput = state.find((contact) => contact.name === payload.name)
 
     if (reLockInput) {
@@ -28,7 +29,6 @@ const contactsReducer = createReducer([], {
   },
   [contactDelete]: (state, { payload }) =>
     state.filter(({ id }) => id !== payload),
-  [getContactFromLocaleStorage]: (_, { payload }) => payload,
 })
 
 export default contactsReducer
