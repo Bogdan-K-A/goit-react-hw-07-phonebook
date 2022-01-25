@@ -1,11 +1,11 @@
-import { Container } from './components/container/Container'
-import ContactList from './components/ContactList/ContactList'
-import ContactForm from './components/ContactForm/ContactForm'
-import ContactFilter from './components/ContactFilter/ContactFilter'
 import { useSelector } from 'react-redux'
+import { Container } from './components/container/Container'
+import ContactForm from './components/ContactForm/ContactForm'
+import { ContactList } from './components/ContactList/ContactList'
+import { ContactFilter } from './components/ContactFilter/ContactFilter'
 import { getLoading } from './redux/selector'
 
-function App() {
+export default function App() {
   const loading = useSelector(getLoading)
 
   return (
@@ -20,5 +20,3 @@ function App() {
     </Container>
   )
 }
-
-export default App

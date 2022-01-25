@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
-import contactOperation from '../../redux/contacts/contact-operations'
 import { useState, useEffect } from 'react'
-import s from './ContactForm.module.css'
 import { getContacts } from '../../redux/selector'
+import {
+  fetchContacts,
+  addContact,
+} from '../../redux/contacts/contact-operations'
+import s from './ContactForm.module.css'
 
-function ContactForm() {
+export default function ContactForm() {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
   const contacts = useSelector(getContacts)
@@ -26,7 +29,7 @@ function ContactForm() {
   }
 
   useEffect(() => {
-    dispatch(contactOperation.fetchContacts())
+    dispatch(fetchContacts())
   }, [])
 
   const handleSubmit = (e) => {
@@ -39,7 +42,7 @@ function ContactForm() {
 
       return contacts
     } else {
-      dispatch(contactOperation.addContact(name, number))
+      dispatch(addContact(name, number))
       setName('')
       setNumber('')
     }
@@ -48,7 +51,6 @@ function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className={s.form}>
       <label>
-        {/* <p>Name</p> */}
         <input
           className={s.roundedInput}
           type="text"
@@ -62,7 +64,6 @@ function ContactForm() {
         />
       </label>
       <label>
-        {/* <p>Number</p> */}
         <input
           className={s.roundedInput}
           type="tel"
@@ -81,5 +82,3 @@ function ContactForm() {
     </form>
   )
 }
-
-export default ContactForm
