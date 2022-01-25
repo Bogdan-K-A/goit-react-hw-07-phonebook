@@ -13,7 +13,7 @@ import {
   REGISTER,
 } from 'redux-persist'
 import filterReducer from '../redux/filter/filter-reducer'
-import contactsReducer from '../redux/contacts/contacs-reducer'
+import { contactsReducer, loading } from '../redux/contacts/contacs-reducer'
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -27,6 +27,7 @@ const middleware = [
 const rootReducer = combineReducers({
   contacts: contactsReducer,
   filter: filterReducer,
+  loading: loading,
 })
 
 export const store = configureStore({
