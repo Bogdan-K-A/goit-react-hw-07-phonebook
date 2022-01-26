@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { contactsFilter } from '../../redux/filter/filter-actions'
 import s from './ContactFilter.module.css'
 
-export const ContactFilter = () => {
+const ContactFilter = () => {
   const dispatch = useDispatch()
   const onChange = (filter) => dispatch(contactsFilter(filter))
 
@@ -17,3 +17,5 @@ export const ContactFilter = () => {
     </label>
   )
 }
+
+export default ContactFilter

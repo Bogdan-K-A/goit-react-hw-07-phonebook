@@ -1,29 +1,28 @@
-import { useDispatch, useSelector } from 'react-redux'
 import { ContactElem } from '../ContactElem/ContactElem'
-import { contactDelete } from '../../redux/contacts/contact-operations'
-import { getVisibleContacts } from '../../redux/selector'
+import { getFilter } from '../../redux/filter/selector'
+import { useSelector } from 'react-redux'
 import s from '../ContactElem/ContactElem.module.css'
 
-export const ContactList = () => {
-  const dispatch = useDispatch()
-  const visibleContacts = useSelector(getVisibleContacts)
-  const onContactDelete = (id) => dispatch(contactDelete(id))
+const ContactList = ({ contacts }) => {
+  const filter = useSelector(getFilter)
 
+  const getVisibleContacts = () => {
+    const normalizedFilter = filter.toLowerCase()
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(normalizedFilter),
+    )
+  }
+
+  const visibleContacts = getVisibleContacts()
   return (
-    <>
-      <ul>
-        {visibleContacts.map(({ id, name, number }) => (
-          <li className={s.contactItem} key={id}>
-            <ContactElem
-              name={name}
-              number={number}
-              onContactDelete={() => {
-                onContactDelete(id)
-              }}
-            />
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul>
+      {visibleContacts.map((contact) => (
+        <li className={s.contactItem} key={contact.id}>
+          <ContactElem {...contact} />
+        </li>
+      ))}
+    </ul>
   )
 }
+
+export default ContactList

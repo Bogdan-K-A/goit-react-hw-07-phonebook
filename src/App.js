@@ -1,22 +1,23 @@
-import { useSelector } from 'react-redux'
-import { Container } from './components/container/Container'
-import ContactForm from './components/ContactForm/ContactForm'
-import { ContactList } from './components/ContactList/ContactList'
-import { ContactFilter } from './components/ContactFilter/ContactFilter'
-import { getLoading } from './redux/selector'
+import Container from './components/container'
+import ContactForm from './components/ContactForm'
+import ContactList from './components/ContactList'
+import ContactFilter from './components/ContactFilter'
+import Spinner from './components/Spinner'
+import { useFetchContactsQuery } from './redux/contacts/contactsSlice'
 
 export default function App() {
-  const loading = useSelector(getLoading)
+  const { data, isFetching } = useFetchContactsQuery()
 
   return (
     <Container>
       <h1>Phoneboock</h1>
-      <ContactForm />
+      <ContactForm contacts={data} />
 
       <h2>Contacts</h2>
       <ContactFilter />
-      {loading && <h2>Loading...</h2>}
-      <ContactList />
+
+      {data && <ContactList contacts={data} />}
+      {isFetching && <Spinner />}
     </Container>
   )
 }

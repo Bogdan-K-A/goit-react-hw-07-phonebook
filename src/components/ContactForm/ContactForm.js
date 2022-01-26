@@ -1,17 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { useState, useEffect } from 'react'
-import { getContacts } from '../../redux/selector'
-import {
-  fetchContacts,
-  addContact,
-} from '../../redux/contacts/contact-operations'
+import { useState } from 'react'
+import { useAddContactMutation } from '../../redux/contacts/contactsSlice'
 import s from './ContactForm.module.css'
 
-export default function ContactForm() {
+export default function ContactForm({ contacts }) {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
-  const contacts = useSelector(getContacts)
-  const dispatch = useDispatch()
+  const [addContact] = useAddContactMutation()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -28,10 +22,6 @@ export default function ContactForm() {
     }
   }
 
-  useEffect(() => {
-    dispatch(fetchContacts())
-  }, [])
-
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -42,7 +32,7 @@ export default function ContactForm() {
 
       return contacts
     } else {
-      dispatch(addContact(name, number))
+      addContact({ name, number })
       setName('')
       setNumber('')
     }
