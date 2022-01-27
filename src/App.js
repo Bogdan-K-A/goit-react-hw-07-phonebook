@@ -14,7 +14,7 @@ export default function App() {
       <ContactForm contacts={data} />
 
       <h2>Contacts</h2>
-      <ContactFilter />
+      {data && data.length >= 2 && <ContactFilter />}
 
       {data && <ContactList contacts={data} />}
       {isFetching && <Spinner />}
